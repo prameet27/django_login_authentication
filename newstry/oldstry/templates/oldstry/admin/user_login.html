@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %} Admin Login {% endblock %}
+
+{% block content %}
+<h3 class="text-center">Welcome to Login Page of Django</h3> <br />
+{% if messages %}
+    {% for message in messages %}
+        <small {% if message.tags %} class="{{message.tags}}" {% endif %} class="text-center text-primary">{{message}}</small>
+    {% endfor %}
+{% endif %}
+
+{% if form.errors %}
+    <div class="alert alert-danger">
+        <strong>Error:</strong> Please correct the following errors<br><br>
+        {% for field, errors in form.errors.items %}
+            {% for error in errors %}
+                {{ error }}
+            {% endfor %}
+        {% endfor %}
+    </div>
+{% endif %}
+
+<form action="{% url 'user_login' %}" method="POST" class="text-center">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type='submit' name="login" value="Login" /> <a href="{% url 'password_reset_form' %}">Forgot Password</a>
+</form> 
+
+{% endblock %}
